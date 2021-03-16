@@ -6,6 +6,7 @@ export default class LoginPage {
 		this.cartTitle = Selector("div[class='subheader']");
 		this.productName = Selector(".inventory_item_name");
 		this.cartItem = Selector('.cart_item');
+		this.chekoutButton = Selector(".btn_action.checkout_button")
 	}
 	
 }

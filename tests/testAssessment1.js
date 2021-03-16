@@ -2,6 +2,7 @@ import '../pages/LoginPage'
 import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import CartPage from "../pages/CartPage"
+import CheckoutPage from "../pages/CheckoutPage"
 
 fixture`QA certification - Assessment 1`
 	.page`https://www.saucedemo.com`;
@@ -9,6 +10,7 @@ fixture`QA certification - Assessment 1`
 const loginPage = new LoginPage();
 const productsPage = new ProductsPage();
 const cartPage = new CartPage();
+const checkoutPage = new CheckoutPage();
 
 test('1. Login valid user', async t => {
 	
@@ -73,7 +75,7 @@ test('5. Add a single item to the shopping cart', async t => {
 });
 
 
-test.only('6. Add multiple items to the shopping cart', async t => {
+test('6. Add multiple items to the shopping cart', async t => {
 	
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
@@ -92,5 +94,23 @@ test.only('6. Add multiple items to the shopping cart', async t => {
 	
 });
 
+test('7. Continue with missing mail information', async t => {
+	// valid login
+	await loginPage.doLogin('standard_user', 'secret_sauce');
+	
+	// select 3 products
+	await t
+		.click(productsPage.addButtons.nth(3))
+		.click(productsPage.addButtons.nth(2))
+		.click(productsPage.addButtons.nth(1))
+		.click(productsPage.shopingCartButton())
+		.click(cartPage.chekoutButton)
+	
+	await t
+		.click(checkoutPage.continueButton)
+		.expect(checkoutPage.errorMessage.exists).ok()
+		.expect(checkoutPage.errorMessage.innerText).eql("Error: First Name is required");
+	
+});
 
 
