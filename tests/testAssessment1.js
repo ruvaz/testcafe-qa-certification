@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import CartPage from "../pages/CartPage"
 import CheckoutPage from "../pages/CheckoutPage"
+import OverviewPage from "../pages/OverviewPage"
 
 fixture`QA certification - Assessment 1`
 	.page`https://www.saucedemo.com`;
@@ -11,13 +12,14 @@ const loginPage = new LoginPage();
 const productsPage = new ProductsPage();
 const cartPage = new CartPage();
 const checkoutPage = new CheckoutPage();
+const overviewPage = new OverviewPage();
 
 test('1. Login valid user', async t => {
 	
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
 	
-	await t.expect(productsPage.titleElement.innerText).eql('Products');
+	await t.expect(productsPage.productsTitle.innerText).eql('Products');
 	
 });
 
@@ -41,8 +43,8 @@ test('3. Logout from products page', async t => {
 	
 	// logout
 	await t
-		.expect(productsPage.titleElement.exists).ok()
-		.expect(productsPage.titleElement.innerText).eql('Products')
+		.expect(productsPage.productsTitle.exists).ok()
+		.expect(productsPage.productsTitle.innerText).eql('Products')
 		.click(productsPage.burgerMenu)
 		.click(productsPage.logoutButton);
 	
@@ -114,3 +116,46 @@ test('7. Continue with missing mail information', async t => {
 });
 
 
+test("8. Fill user's information", async t => {
+	// valid login
+	await loginPage.doLogin('standard_user', 'secret_sauce');
+	
+	// select 3 products
+	await t
+		.click(productsPage.addButtons.nth(3))
+		.click(productsPage.addButtons.nth(2))
+		.click(productsPage.addButtons.nth(1))
+		.click(productsPage.shopingCartButton)
+		.click(cartPage.chekoutButton);
+	
+	await checkoutPage.doCheckout('Ruben', 'Vazquez', '76910');
+	
+	await t
+		.expect(overviewPage.overviewTitle.innerText)
+		.eql("Checkout: Overview")
+});
+
+
+test.only("9. Validate items in the overview page match with the added items", async t => {
+	// valid login
+	await loginPage.doLogin('standard_user', 'secret_sauce');
+	
+	// select 3 products
+	await t
+		.click(productsPage.addButtons.nth(3)) //Sauce Labs Fleece Jacket
+		.click(productsPage.addButtons.nth(2)) //Sauce Labs Bolt T-Shirt
+		.click(productsPage.addButtons.nth(1)) //Sauce Labs Bike Light
+		.click(productsPage.shopingCartButton)
+		.click(cartPage.chekoutButton);
+	
+	await checkoutPage.doCheckout('Ruben', 'Vazquez', '76910');
+	
+	await t
+		.expect(overviewPage.overviewTitle.innerText)
+		.eql("Checkout: Overview")
+		.expect(overviewPage.inventoryItem.exists).ok()
+		.expect(overviewPage.inventoryItem.nth(0).innerText).eql("Sauce Labs Fleece Jacket")
+		.expect(overviewPage.inventoryItem.nth(1).innerText).eql("Sauce Labs Bolt T-Shirt")
+		.expect(overviewPage.inventoryItem.nth(2).innerText).eql("Sauce Labs Bike Light")
+	
+});

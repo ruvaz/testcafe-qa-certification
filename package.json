@@ -6,7 +6,7 @@
   "scripts": {
     "test": "testcafe edge ./tests",
     "test-all-chrome": "testcafe chrome ./tests",
-    "test-all": "testcafe chrome,firefox ./tests"
+    "test-all": "testcafe chrome,firefox,edge ./tests"
   },
   "author": "Ruben Vazquez",
   "license": "ISC",

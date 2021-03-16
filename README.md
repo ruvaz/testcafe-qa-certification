@@ -39,9 +39,9 @@ npm run test-all-chrome
 ```
 
 
-## Examples in This Repository
+## Test in this Repository
 
-> Assessment session 1
+# Assessment session 1
 
 The repository includes the following examples:
 
@@ -54,3 +54,4 @@ The repository includes the following examples:
 7. Continue with missing mail information
 8. Fill user's information
 9. Final order items
+10. Complete a purchase
