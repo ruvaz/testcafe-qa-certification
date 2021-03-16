@@ -47,7 +47,7 @@ The repository includes the following examples:
 
 1. Login with a valid user.
 2. Login with an invalid user.
-3. Logout fmor product's page.
+3. Logout from product's page.
 4. Navigate to the shopping cart.
 5. Add a single item to the shopping cart.
 6. Add multiple items to the shopping cart

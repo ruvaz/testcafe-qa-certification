@@ -3,26 +3,26 @@ import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 import CartPage from "../pages/CartPage"
 
-fixture`QA certification Saucedemo Tests`
+fixture`QA certification - Assessment 1`
 	.page`https://www.saucedemo.com`;
 
 const loginPage = new LoginPage();
 const productsPage = new ProductsPage();
 const cartPage = new CartPage();
 
-test.skip('Login valid user', async t => {
-
+test('1. Login valid user', async t => {
+	
 	// valid login
-	await loginPage.doLogin('standard_user', 'secret_sauce')
+	await loginPage.doLogin('standard_user', 'secret_sauce');
 	
 	await t.expect(productsPage.titleElement.innerText).eql('Products');
 	
 });
 
-test.skip('Login Invalid user', async t => {
+test('2. Login Invalid user', async t => {
 	
 	// invalid login
-	await loginPage.doLogin('wrong_user', 'secret')
+	await loginPage.doLogin('wrong_user', 'secret');
 	
 	// validate error message
 	await t
@@ -32,10 +32,10 @@ test.skip('Login Invalid user', async t => {
 	
 });
 
-test.skip('Logout from products page', async t => {
+test('3. Logout from products page', async t => {
 	
 	// valid Login
-	await loginPage.doLogin('standard_user', 'secret_sauce')
+	await loginPage.doLogin('standard_user', 'secret_sauce');
 	
 	// logout
 	await t
@@ -46,7 +46,7 @@ test.skip('Logout from products page', async t => {
 	
 });
 
-test('Navigate to shoping Cart', async t => {
+test('4. Navigate to shoping Cart', async t => {
 	
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
@@ -57,3 +57,40 @@ test('Navigate to shoping Cart', async t => {
 		.expect(cartPage.cartTitle.innerText).eql('Your Cart');
 	
 });
+
+test('5. Add a single item to the shopping cart', async t => {
+	
+	// valid login
+	await loginPage.doLogin('standard_user', 'secret_sauce');
+	
+	await t
+		.click(productsPage.addButtons.nth(2))
+		.click(productsPage.shopingCartButton())
+		.expect(cartPage.cartTitle.innerText).eql('Your Cart');
+	
+	await t.expect(cartPage.productName.innerText).eql("Sauce Labs Bolt T-Shirt");
+	
+});
+
+
+test.only('6. Add multiple items to the shopping cart', async t => {
+	
+	// valid login
+	await loginPage.doLogin('standard_user', 'secret_sauce');
+	
+	// select 3 products
+	await t
+		.click(productsPage.addButtons.nth(3))
+		.click(productsPage.addButtons.nth(2))
+		.click(productsPage.addButtons.nth(1))
+		.click(productsPage.shopingCartButton());
+	
+	const cartCount = cartPage.cartItem.count;
+	
+	// validate 3 products in cart list
+	await t.expect(cartCount).eql(3);
+	
+});
+
+
+

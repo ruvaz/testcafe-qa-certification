@@ -10,6 +10,7 @@ export default class LoginPage {
 		this.errorMessage = Selector("h3[data-test='error']")
 	}
 	
+	// login
 	async doLogin(user, pass) {
 		await t
 			.typeText(this.userInput, user)

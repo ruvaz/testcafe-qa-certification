@@ -4,7 +4,7 @@
   "description": "QA-Certification",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "testcafe edge ./tests",
     "test-all-chrome": "testcafe chrome ./tests",
     "test-all": "testcafe chrome,firefox ./tests"
   },
