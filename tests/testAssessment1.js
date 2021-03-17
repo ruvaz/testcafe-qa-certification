@@ -4,6 +4,7 @@ import ProductsPage from "../pages/ProductsPage";
 import CartPage from "../pages/CartPage"
 import CheckoutPage from "../pages/CheckoutPage"
 import OverviewPage from "../pages/OverviewPage"
+import FinishPage from "../pages/FinishPage"
 
 fixture`QA certification - Assessment 1`
 	.page`https://www.saucedemo.com`;
@@ -13,8 +14,9 @@ const productsPage = new ProductsPage();
 const cartPage = new CartPage();
 const checkoutPage = new CheckoutPage();
 const overviewPage = new OverviewPage();
+const finishPage = new FinishPage();
 
-test('1. Login valid user', async t => {
+test('1. Valid user login.', async t => {
 	
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
@@ -23,7 +25,7 @@ test('1. Login valid user', async t => {
 	
 });
 
-test('2. Login Invalid user', async t => {
+test('2. Invalid user login.', async t => {
 	
 	// invalid login
 	await loginPage.doLogin('wrong_user', 'secret');
@@ -36,7 +38,7 @@ test('2. Login Invalid user', async t => {
 	
 });
 
-test('3. Logout from products page', async t => {
+test('3. Logout from products page.', async t => {
 	
 	// valid Login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
@@ -50,7 +52,7 @@ test('3. Logout from products page', async t => {
 	
 });
 
-test('4. Navigate to shoping Cart', async t => {
+test('4. Goes to the shopping cart.', async t => {
 	
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
@@ -62,7 +64,7 @@ test('4. Navigate to shoping Cart', async t => {
 	
 });
 
-test('5. Add a single item to the shopping cart', async t => {
+test('5. Add a single item to the shopping cart.', async t => {
 	
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
@@ -77,7 +79,7 @@ test('5. Add a single item to the shopping cart', async t => {
 });
 
 
-test('6. Add multiple items to the shopping cart', async t => {
+test('6. Add multiple items to the shopping cart.', async t => {
 	
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
@@ -96,7 +98,7 @@ test('6. Add multiple items to the shopping cart', async t => {
 	
 });
 
-test('7. Continue with missing mail information', async t => {
+test('7. User mail information fails', async t => {
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
 	
@@ -116,7 +118,7 @@ test('7. Continue with missing mail information', async t => {
 });
 
 
-test("8. Fill user's information", async t => {
+test("8. Fill in the user information.", async t => {
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
 	
@@ -136,7 +138,7 @@ test("8. Fill user's information", async t => {
 });
 
 
-test.only("9. Validate items in the overview page match with the added items", async t => {
+test("9. Validate that the items on the overview page match the added items.", async t => {
 	// valid login
 	await loginPage.doLogin('standard_user', 'secret_sauce');
 	
@@ -158,4 +160,25 @@ test.only("9. Validate items in the overview page match with the added items", a
 		.expect(overviewPage.inventoryItem.nth(1).innerText).eql("Sauce Labs Bolt T-Shirt")
 		.expect(overviewPage.inventoryItem.nth(2).innerText).eql("Sauce Labs Bike Light")
 	
+});
+
+
+test("10. Purchase 3 items completed.", async t => {
+	// valid login
+	await loginPage.doLogin('standard_user', 'secret_sauce');
+	
+	// select 3 products
+	await t
+		.click(productsPage.addButtons.nth(3)) //Sauce Labs Fleece Jacket
+		.click(productsPage.addButtons.nth(2)) //Sauce Labs Bolt T-Shirt
+		.click(productsPage.addButtons.nth(1)) //Sauce Labs Bike Light
+		.click(productsPage.shopingCartButton)
+		.click(cartPage.chekoutButton);
+	
+	await checkoutPage.doCheckout('Ruben', 'Vazquez', '76910');
+	
+	await t
+		.click(overviewPage.finishButton)
+		.expect(finishPage.completeHeader.exists).ok()
+		.expect(finishPage.completeHeader.innerText).eql("THANK YOU FOR YOUR ORDER")
 });
