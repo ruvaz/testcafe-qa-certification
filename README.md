@@ -2,7 +2,6 @@
 
 This repository contains my challenge exercises to get the QA Certification from Wizeline
 
-
 ## Installation
 
 1. Clone this repository:
@@ -14,7 +13,7 @@ This repository contains my challenge exercises to get the QA Certification from
 2. Go to the project's root directory:
 
     ```sh
-    cd qa-certification
+    cd testcafe-qa-certification
     ```
 
 3. Install the dependencies:
@@ -23,14 +22,7 @@ This repository contains my challenge exercises to get the QA Certification from
     npm install
     ```
 
-
 ## Usage
-
-Use the `test-pc-browsers` script to run all tests in Chrome,Firefox and Edge at the same time.
-
-```sh
-npm run test-pc-browsers
-```
 
 Use the `test-all-chrome` script to run all tests in Chrome only.
 
@@ -38,9 +30,16 @@ Use the `test-all-chrome` script to run all tests in Chrome only.
 npm run test-all-chrome
 ```
 
-Use the `test-all-report` to get results in html report, you will find the file in the path: ./reports/report.html
+Use the `test-multi-browser` script to run all tests in Chrome,Firefox and Edge at the same time.
 
-![Testcafé Reporter HTML](./report.html.png "Testcafé Reporter HTML")
+```sh
+npm run test-multi-browser
+```
+
+Use the `test-all-report` to get results in html report.
+> You will find the file in the path: ./reports/report.html
+
+![Testcafé Reporter HTML](assets/report.html.png "Testcafé Reporter HTML")
 
 ```sh
 npm run test-all-report
@@ -70,7 +69,7 @@ The repository includes the following examples:
 4. Navigate to the shopping cart.
 5. Add a single item to the shopping cart.
 6. Add multiple items to the shopping cart
-7. Continue with missing mail information
-8. Fill user's information
-9. Final order items
-10. Complete a purchase
+7. Continue with missing mail information.
+8. Fill user's information.
+9. Final order items.
+10. Complete a purchase.

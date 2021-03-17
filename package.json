@@ -8,7 +8,7 @@
     "test-all-browsers": "testcafe all ./tests",
     "test-all-chrome": "testcafe chrome ./tests",
     "test-all-firefox": "testcafe firefox ./tests",
-    "test-pc-browsers": "testcafe chrome,firefox,edge ./tests",
+    "test-multi-browser": "testcafe chrome,firefox,edge ./tests",
     "test-mobile-qr": "testcafe remote ./tests --qr-code",
     "test-mobile-emulated": "testcafe 'chrome:emulation:device=iphone X' ./tests",
     "test-all-report": "testcafe chrome ./tests --reporter html:reports/report.html"
