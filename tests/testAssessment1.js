@@ -30,7 +30,7 @@ test('2. Invalid user login.', async t => {
 		.expect(loginPage.loginButton.exists).ok()
 });
 
-test.only('3. Logout from products page.', async t => {
+test('3. Logout from products page.', async t => {
 	await t
 		.useRole(standardUser)
 		.expect(productsPage.productsTitle.exists).ok()
